@@ -39,7 +39,7 @@ $.extend({
 	},
 	KoalaFormMsgBox:function(titulo,msg,type,settings,icon){
 		//#koalaFormBox > div > p
-		var d = $("<div>").attr("id",((settings==null)?"koalaFormBox":settings.msg_box_id)).addClass("ui-widget").append($("<div>").css({"display": "none","cursor":"pointer","text-align":"center","position":"fixed","top":0,"width":"100%","z-index":5}).append($("<p>").addClass("ui-state-highlight ui-corner-all").css({"text-align":"justify","margin":"0 auto 0 auto","padding":"0.7em","width":"500px","font-size":"0.7em"}).append($("<span>").addClass(((type=="ok")?"ui-icon ui-icon-circle-check":((icon!=null)?icon:"ui-icon ui-icon-info"))).css({"float":"left","margin-right":".3em"}) ).append((titulo.replace(":","")+": "+msg ))).click(function() { $.KFWOverlay("hide"); $(this).fadeOut(((settings==null)?300:settings.fadeOutTime)); }).show("fast", function(){ if($.browser.msie != true) { $(this).effect("bounce", { times:3 }, 300); } }));
+		var d = $("<div>").attr("id",((settings==null)?"koalaFormBox":settings.msg_box_id)).addClass("ui-widget").append($("<div>").css({"display": "none","cursor":"pointer","text-align":"center","position":"fixed","top":0,"width":"100%","z-index":5}).append($("<p>").addClass("ui-state-highlight ui-corner-all").css({"text-align":"justify","margin":"0 auto 0 auto","padding":"0.7em","width":"500px","font-size":"0.7em"}).append($("<span>").addClass(((type=="ok")?"ui-icon ui-icon-circle-check":((icon!=null)?icon:"ui-icon ui-icon-info"))).css({"float":"left","margin-right":".3em"}) ).append((titulo+" "+msg ))).click(function() { $.KFWOverlay("hide"); $(this).fadeOut(((settings==null)?300:settings.fadeOutTime)); }).show("fast", function(){ if($.browser.msie != true) { $(this).effect("bounce", { times:3 }, 300); } }));
 		if(type=="ok") {$.KFWOverlay("show");}
 		return d.appendTo($("body"));
 	},
@@ -60,7 +60,7 @@ $.extend({
 				else {
 					isValid = false;
 					if(defaults.highlightErrors) { $(e.element).addClass("ui-state-error"); }
-					msg += (defaults.use_css)?"<li><b>"+e.titulo+"</b>: ":e.titulo.toUpperCase()+": ";
+					msg += (defaults.use_css)?"<li><b>"+e.titulo.replace(":","")+"</b>: ":e.titulo.toUpperCase()+": ";
 					$.each(e.errores,function(index,error) { msg += error; if(index < (e.errores.length-1)) {  msg +=", "; } });
 					msg += (defaults.use_css)?"</li>":"\r\n";
 					if(defaults.onError!=null && $.isFunction(defaults.onError)) { $(document).trigger("onError",[$(e.element),e.errores]); }
@@ -70,7 +70,7 @@ $.extend({
 		$.KoalaFormHide();
 		if(!isValid) {
 			if(defaults.use_css) {
-				if(defaults.showMessages) { $.KoalaFormMsgBox("<strong>Mensaje de error</strong>","<ul>"+msg+"</ul>",type,defaults,"ui-icon ui-icon-alert"); }
+				if(defaults.showMessages) { $.KoalaFormMsgBox("<strong>Mensaje de error</strong>:","<ul>"+msg+"</ul>",type,defaults,"ui-icon ui-icon-alert"); }
 				else { alert(msg); }
 			}
 		} else {$.KoalaFormHide();}
@@ -356,7 +356,7 @@ $.fn.extend({
 				}));
 				if(valid) {
 					//$.KoalaFormHide($form.attr("id"));
-					$.KoalaFormMsgBox("<strong>OK</strong>","Enviando Datos.","ok",defaults,"ui-icon ui-icon-clock");
+					$.KoalaFormMsgBox("<strong>OK</strong>:","Enviando Datos.","ok",defaults,"ui-icon ui-icon-clock");
 					if(defaults.ajaxOptions !=null && !$.isUndefined(defaults.ajaxOptions.url)) {
 						//e.preventDefault();
 						var method = $form.attr('method');

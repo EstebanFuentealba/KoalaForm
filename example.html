@@ -28,18 +28,22 @@ and open the template in the editor.
                 background-color: #000000;
                 color: #FFFFFF;
             }
+            .success {
+                background-color:  #00FF00;
+                color: #000000;
+            }
         </style>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js" type="text/javascript"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js" type="text/javascript"></script>
         <script src="js/jquery.koalaform.js" type="text/javascript"></script>
         <script>
             $(document).ready(function() {
-                $.KoalaFormMsgBox("<b>Titulo</b>","Testeando la funcionalidad",null,null,"progress-loading").find("div > p").removeClass("ui-state-highlight").addClass("miClass");
+                $.KoalaFormMsgBox("<b>Titulo</b>:","Testeando la funcionalidad",null,null,"progress-loading").find("div > p").removeClass("ui-state-highlight").addClass("miClass");
                 $("#signupForm").KoalaForm({
                     onSuccess:function(form){
                         setTimeout(function(){
                             $.KoalaFormHide(form);
-                            $.KoalaFormMsgBox("Enviado","Todo Ok",null,null,"ui-icon ui-icon-circle-check");
+                            $.KoalaFormMsgBox("Enviado:","Todo Ok",null,null,"ui-icon ui-icon-circle-check").find("div > p").removeClass("ui-state-highlight").addClass("success");
                         },1000)
                         $('input[type="submit"]',$(form)).attr("disabled",false);
                         return false;
