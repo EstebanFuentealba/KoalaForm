@@ -30,10 +30,10 @@ $.extend({
 				}
 			}
 		}
-	},
+	/*## TODO CALZA POLLO ##*/
+        },
 	KFWGetFormByElement:function(element){ return $(element).closest("form"); },
 	KFWGetSettings:function(element){
-		/*## TODO CALZA POLLO ##*/
                 if($(element).is("form")){ return $(element).data("KoalaSettings"); }
 		return ($.KFWGetFormByElement(element)).data("KoalaSettings");
 	},
@@ -158,15 +158,12 @@ $.extend({
 	isTelefonoFijo:function(element) {
 			var match = (new RegExp(/^(((\(?(\d){1,3}\)?)\-?))?(\d){1}?((\d){6})$/)).exec(element.val());
 			if(match){
-				console.log(match);
 				var CODIGO_PAIS=3; CODIGO_CIUDAD = 3,CODIGO_FONO_A=5,CODIGO_FONO_B=6;
-				var fono="";
+				var fono="";                            
 				/*if(!$.isUndefined(match[CODIGO_PAIS])){
-					//CODIGO PAIS
 					fono += "+"+match[CODIGO_PAIS].replace("+","").replace(" ","")+" ";
 				}*/
 				if(!$.isUndefined(match[CODIGO_CIUDAD])){
-					//COdigo Ciudad
 					fono += "("+match[CODIGO_CIUDAD].replace("(","").replace(")","")+")-";
 				}
 				if(!$.isUndefined(match[CODIGO_FONO_A])){
