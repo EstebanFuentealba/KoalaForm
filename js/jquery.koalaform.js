@@ -39,7 +39,7 @@ $.extend({
 	},
 	KoalaFormMsgBox:function(titulo,msg,type,settings,icon){
 		//#koalaFormBox > div > p
-		var d = $("<div>").attr("id",((settings==null)?"koalaFormBox":settings.msg_box_id)).addClass("ui-widget").append($("<div>").css({"display": "none","cursor":"pointer","text-align":"center","position":"fixed","top":0,"width":"100%","z-index":5}).append($("<p>").addClass("ui-state-highlight ui-corner-all").css({"text-align":"justify","margin":"0 auto 0 auto","padding":"0.7em","width":"500px","font-size":"0.7em"}).append($("<span>").addClass(((type=="ok")?"ui-icon ui-icon-circle-check":((icon!=null)?icon:"ui-icon ui-icon-info"))).css({"float":"left","margin-right":".3em"}) ).append((titulo+": "+msg ))).click(function() { $.KFWOverlay("hide"); $(this).fadeOut(((settings==null)?300:settings.fadeOutTime)); }).show("fast", function(){ if($.browser.msie != true) { $(this).effect("bounce", { times:3 }, 300); } }));
+		var d = $("<div>").attr("id",((settings==null)?"koalaFormBox":settings.msg_box_id)).addClass("ui-widget").append($("<div>").css({"display": "none","cursor":"pointer","text-align":"center","position":"fixed","top":0,"width":"100%","z-index":5}).append($("<p>").addClass("ui-state-highlight ui-corner-all").css({"text-align":"justify","margin":"0 auto 0 auto","padding":"0.7em","width":"500px","font-size":"0.7em"}).append($("<span>").addClass(((type=="ok")?"ui-icon ui-icon-circle-check":((icon!=null)?icon:"ui-icon ui-icon-info"))).css({"float":"left","margin-right":".3em"}) ).append((titulo.replace(":","")+": "+msg ))).click(function() { $.KFWOverlay("hide"); $(this).fadeOut(((settings==null)?300:settings.fadeOutTime)); }).show("fast", function(){ if($.browser.msie != true) { $(this).effect("bounce", { times:3 }, 300); } }));
 		if(type=="ok") {$.KFWOverlay("show");}
 		return d.appendTo($("body"));
 	},
@@ -552,4 +552,3 @@ $.fn.extend({
 		});
 	}
 });
-//Test
