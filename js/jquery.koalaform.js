@@ -586,7 +586,6 @@ $.fn.extend({
         return $(this).each(function() {
             $(this).keypress(function(e) {
                 var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-                console.log(key);
                 if(key == 13) {
                     return true;
                 }
@@ -640,5 +639,5 @@ $.fn.extend({
                 }, 100);
             });
         });
-}
+    }
 });
