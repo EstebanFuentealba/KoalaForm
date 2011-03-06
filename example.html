@@ -40,14 +40,6 @@ and open the template in the editor.
             $(document).ready(function() {
                 $.KoalaFormMsgBox("<b>Titulo</b>:","Testeando $.KoalaFormMsgBox ",null,null,"progress-loading").find("div > p").removeClass("ui-state-highlight").addClass("miClass");
                 $("#signupForm").KoalaForm({
-                    errorMessage: {
-                        title: "<strong>Ta mala la wea</strong>:",
-                        iconClass: ""
-                    },
-                    successMessage: {
-                        title: "<strong>OKKKKK</strong>:",
-                        msg:"Enviando Datos"
-                    },
                     disableButtonOnSubmit: true,
                     showOverflow: true,
                     onSuccess:function(form){
