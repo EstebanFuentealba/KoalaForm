@@ -458,6 +458,7 @@ $.fn.extend({
             onError:null,
             onNext:null,
             onSuccess:null,
+            onBlur: true,
             ajaxOptions:null,
             horaOptions:null,
             addOptions:null,
@@ -523,9 +524,11 @@ $.fn.extend({
                     }
                     var isKoalaElement = $.attachValidation($($element));
                     if(isKoalaElement){ /* ON */
-                        $($element).blur(function(){
-                            $.msgMotor($($element).data("KoalaElement").validate());
-                        });
+                        if(settings.onBlur){
+                            $($element).blur(function(){
+                                $.msgMotor($($element).data("KoalaElement").validate());
+                            });
+                        }
                     }
                 }
             });
