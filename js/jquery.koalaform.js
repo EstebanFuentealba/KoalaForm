@@ -66,8 +66,7 @@ $.extend({
             "text-align":"justify",
             "margin":"0 auto 0 auto",
             "padding":"0.7em",
-            "width":"500px",
-            "font-size":"0.7em"
+            "width":"500px"
         }).append($("<span>").addClass(((type=="ok")?"ui-icon ui-icon-circle-check":((icon!=null)?icon:"ui-icon ui-icon-info"))).css({
             "float":"left",
             "margin-right":".3em"
@@ -450,7 +449,7 @@ $.fn.extend({
             },
             successMessage: {
                 title: "<strong>OK</strong>:",
-                msg:"Enviando Datos",
+                msg:"Su mensaje está siendo procesado, espere un momento.",
                 iconClass:"ui-icon ui-icon-clock"
             },
             highlightErrors: true,
@@ -464,20 +463,20 @@ $.fn.extend({
             addOptions:null,
             disableButtonOnSubmit: true,
             validations: [
-            {name:"novacio",fn:"$.isNotVacio",msg:"no puede estar vacio",afterFn:null},
-            {name:"rut",fn:"$.isRut", msg:"debe ser válido"},
-            {name:"numero",accept:"numeric",fn:"$.isNumber",msg:"debe ser numerico",afterFn: $.numberFormat},
-            {name:"email",fn:"$.isEmail",msg:"debe ser valido"},
+            {name:"novacio",fn:"$.isNotVacio",msg:"no puede estar vacÃ­o",afterFn:null},
+            {name:"rut",fn:"$.isRut", msg:"debe ser vÃ¡lido"},
+            {name:"numero",accept:"numeric",fn:"$.isNumber",msg:"debe ser numÃ©rico",afterFn: $.numberFormat},
+            {name:"email",fn:"$.isEmail",msg:"debe ser vÃ¡lido"},
             {name:"ceroPositivo",accept:"numeric",fn:"$.ceroPositivo",msg:"debe ser mayor o igual a 0",afterFn: $.numberFormat},
             {name:"positivo",accept:"numeric",fn:"$.positivo",msg:"debe ser mayor a 0",afterFn: $.numberFormat},
             {name:"ceroNegativo",accept:"numeric",fn:"$.ceroNegativo",msg:"debe ser menor o igual a 0",afterFn: $.numberFormat},
             {name:"negativo",accept:"numeric",fn:"$.negativo",msg:"debe ser menor a 0",afterFn: $.numberFormat},
             {name:"url",fn:"$.isUrl",msg:"debe ser una url"},
             {name:"decimal",accept:"numeric",fn:"$.isNumber",msg:"debe ser numero decimal",afterFn: $.numberFormat},
-            {name:"hora",fn:"$.isHora",msg:"debe tener un formato de hora valido"},
-            {name:"fono",accept:"numeric",fn:"$.isTelefonoFijo",msg:"debe ingresar un telefono fijo valido",afterFn: $.fonoFormat},
-            {name:"celular",accept:"numeric",fn:"$.isCelular",msg:"debe ingresar un celular valido"},
-            {name:"patente",fn:"$.isPatente",msg:"debe ingresar una patente valida"},
+            {name:"hora",fn:"$.isHora",msg:"debe tener un formato de hora vÃ¡lido"},
+            {name:"fono",accept:"numeric",fn:"$.isTelefonoFijo",msg:"debe ingresar un tel\xe9fono fijo vÃ¡lido",afterFn: $.fonoFormat},
+            {name:"celular",accept:"numeric",fn:"$.isCelular",msg:"debe ingresar un celular vÃ¡lido"},
+            {name:"patente",fn:"$.isPatente",msg:"debe ingresar una patente vÃ¡lida"},
             {name:"same",fn:"$.confirmWithElement",msg:"debe ser igual a"},
             {name:"rangoNumerico",type:"numeric", fn:"$.inRango",msg:"no esta en el rango",afterFn: $.numberFormat},
             {name:"group",fn:"$.groupCheck",msg:"no cumplen la condicion"},
