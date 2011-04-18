@@ -514,7 +514,8 @@ $.fn.extend({
                     if($("> :input[type='checkbox']",$($element)).size()>0){
                         $.attachValidation($($element));
                         $($element).find("> :input[type='checkbox']").click(function(){
-                            $.msgMotor($(this).parent("fieldset").data("KoalaElement").validate());
+                            if(typeof $(this).parent("fieldset").data("KoalaElement") != 'undefined')
+                                $.msgMotor($(this).parent("fieldset").data("KoalaElement").validate());
                         });
                     }
                 } else {
