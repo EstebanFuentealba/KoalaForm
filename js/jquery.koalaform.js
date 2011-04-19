@@ -355,13 +355,19 @@ groupCheck: function(element,compare) {
         return false;
     }
 },
-isDate: function(element,compare) {
+isDate: function(element) {
     /* dd-mm-yy */
-    var match = (new RegExp(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/)).exec(element.val());
-    if(match){
-        element.val($.datepicker.formatDate(compare[0], new Date(match[3], parseInt(match[2]) -1, match[1])));
-        return true;
-    }
+    try {
+        var match = (new RegExp(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/)).exec(element.val());
+        if(match){
+            if((match[2] >0 && match[2] <= 12) && (match[1] > 0 && match[1]< 32)){
+                var date =  new Date(match[3], parseInt(match[2]) -1, match[1]);
+                if(date=='Invalid Date'){ return false; }
+                element.val($.datepicker.formatDate('dd-mm-yy', date));
+                return true;
+            }
+        }
+    } catch(e){}
     return false;
 },
 nextEl: function(e,compare){
