@@ -355,6 +355,15 @@ groupCheck: function(element,compare) {
         return false;
     }
 },
+isDate: function(element,compare) {
+    /* dd-mm-yy */
+    var match = (new RegExp(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/)).exec(element.val());
+    if(match){
+        element.val($.datepicker.formatDate(compare[0], new Date(match[3], parseInt(match[2]) -1, match[1])));
+        return true;
+    }
+    return false;
+},
 nextEl: function(e,compare){
     var elements = compare.toString().split(",");
     var oEl = $(e);
@@ -463,24 +472,26 @@ $.fn.extend({
             addOptions:null,
             disableButtonOnSubmit: true,
             validations: [
-            {name:"novacio",fn:"$.isNotVacio",msg:"no puede estar vacÃ­o",afterFn:null},
-            {name:"rut",fn:"$.isRut", msg:"debe ser vÃ¡lido"},
-            {name:"numero",accept:"numeric",fn:"$.isNumber",msg:"debe ser numÃ©rico",afterFn: $.numberFormat},
-            {name:"email",fn:"$.isEmail",msg:"debe ser vÃ¡lido"},
-            {name:"ceroPositivo",accept:"numeric",fn:"$.ceroPositivo",msg:"debe ser mayor o igual a 0",afterFn: $.numberFormat},
-            {name:"positivo",accept:"numeric",fn:"$.positivo",msg:"debe ser mayor a 0",afterFn: $.numberFormat},
-            {name:"ceroNegativo",accept:"numeric",fn:"$.ceroNegativo",msg:"debe ser menor o igual a 0",afterFn: $.numberFormat},
-            {name:"negativo",accept:"numeric",fn:"$.negativo",msg:"debe ser menor a 0",afterFn: $.numberFormat},
-            {name:"url",fn:"$.isUrl",msg:"debe ser una url"},
-            {name:"decimal",accept:"numeric",fn:"$.isNumber",msg:"debe ser numero decimal",afterFn: $.numberFormat},
-            {name:"hora",fn:"$.isHora",msg:"debe tener un formato de hora vÃ¡lido"},
-            {name:"fono",accept:"numeric",fn:"$.isTelefonoFijo",msg:"debe ingresar un tel\xe9fono fijo vÃ¡lido",afterFn: $.fonoFormat},
-            {name:"celular",accept:"numeric",fn:"$.isCelular",msg:"debe ingresar un celular vÃ¡lido"},
-            {name:"patente",fn:"$.isPatente",msg:"debe ingresar una patente vÃ¡lida"},
-            {name:"same",fn:"$.confirmWithElement",msg:"debe ser igual a"},
-            {name:"rangoNumerico",type:"numeric", fn:"$.inRango",msg:"no esta en el rango",afterFn: $.numberFormat},
-            {name:"group",fn:"$.groupCheck",msg:"no cumplen la condicion"},
-            {name:"next",fn:"$.nextEl",msg:""}
+                {name:"novacio",fn:"$.isNotVacio",msg:"no puede estar vac&iacute;o",afterFn:null},
+                {name:"rut",fn:"$.isRut", msg:"debe ser v&aacute;lido"},
+                {name:"numero",accept:"numeric",fn:"$.isNumber",msg:"debe ser num&eacute;rico",afterFn: $.numberFormat},
+                {name:"email",fn:"$.isEmail",msg:"debe ser v&aacute;lido"},
+                {name:"ceroPositivo",accept:"numeric",fn:"$.ceroPositivo",msg:"debe ser mayor o igual a 0",afterFn: $.numberFormat},
+                {name:"positivo",accept:"numeric",fn:"$.positivo",msg:"debe ser mayor a 0",afterFn: $.numberFormat},
+                {name:"ceroNegativo",accept:"numeric",fn:"$.ceroNegativo",msg:"debe ser menor o igual a 0",afterFn: $.numberFormat},
+                {name:"negativo",accept:"numeric",fn:"$.negativo",msg:"debe ser menor a 0",afterFn: $.numberFormat},
+                {name:"url",fn:"$.isUrl",msg:"debe ser una url"},
+                {name:"decimal",accept:"numeric",fn:"$.isNumber",msg:"debe ser numero decimal",afterFn: $.numberFormat},
+                {name:"hora",fn:"$.isHora",msg:"debe tener un formato de hora v&aacute;lido"},
+                {name:"fono",accept:"numeric",fn:"$.isTelefonoFijo",msg:"debe ingresar un tel&eacute;fono fijo v&aacute;lido",afterFn: $.fonoFormat},
+                {name:"celular",accept:"numeric",fn:"$.isCelular",msg:"debe ingresar un celular v&aacute;lido"},
+                {name:"patente",fn:"$.isPatente",msg:"debe ingresar una patente v&aacute;lida"},
+                {name:"same",fn:"$.confirmWithElement",msg:"debe ser igual a"},
+                {name:"rangoNumerico",type:"numeric", fn:"$.inRango",msg:"no esta en el rango",afterFn: $.numberFormat},
+                {name:"group",fn:"$.groupCheck",msg:"no cumplen la condicion"},
+                {name:"date",fn:"$.isDate",msg:"Debe Ingresar una fecha v&aacute;lida"},
+                {name:"next",fn:"$.nextEl",msg:""}
+
             ]
         };
         $t = this;
