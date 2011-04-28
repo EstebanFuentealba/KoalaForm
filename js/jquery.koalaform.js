@@ -53,8 +53,12 @@ $.extend({
         return ($.KFWGetFormByElement(element)).data("KoalaSettings");
     },
     KoalaFormMsgBox:function(titulo,msg,type,settings,icon){
+        var btnCerrar = $('<p style="text-align: right; padding: 0 5px 0px 0px; font-size:10px">Click para cerrar</p>').click(function(){
+            if(settings!=null && settings.showOverflow){$.KFWOverlay("hide");}
+            $(this).fadeOut(((settings==null)?300:settings.fadeOutTime));   
+        });
         //#koalaFormBox > div > p
-        var d = $("<div>").attr("id",((settings==null)?"koalaFormBox":settings.msg_box_id)).addClass("ui-widget").append($("<div>").css({
+        var d = $("<div>").attr("id",((settings==null)?"koalaFormBox":settings.msg_box_id)).addClass("ui-widget").append($("<div>").addClass("koala-container").css({
             "display": "none",
             "cursor":"pointer",
             "text-align":"center",
@@ -62,7 +66,7 @@ $.extend({
             "top":0,
             "width":"100%",
             "z-index":5
-        }).append($("<p>").addClass("ui-state-highlight ui-corner-all").css({
+        }).append($("<div>").addClass(((type=="error")?"ui-state-error":"ui-state-highlight")+" ui-corner-all").css({
             "text-align":"justify",
             "margin":"0 auto 0 auto",
             "padding":"0.7em",
@@ -70,16 +74,29 @@ $.extend({
         }).append($("<span>").addClass(((type=="ok")?"ui-icon ui-icon-circle-check":((icon!=null)?icon:"ui-icon ui-icon-info"))).css({
             "float":"left",
             "margin-right":".3em"
-        }) ).append((titulo+" "+msg ))).click(function() {
+        }) ).append((titulo+" "+msg )).append(
+            btnCerrar
+        )).click(function() {
             if(settings!=null && settings.showOverflow){$.KFWOverlay("hide");}
             $(this).fadeOut(((settings==null)?300:settings.fadeOutTime));
-        }).show("fast", function(){
-            if($.browser.msie != true) {
-                $(this).effect("bounce", {
-                    times:3
-                }, 300);
-            }
         }));
+        if(settings!=null &&  settings.transition=="bounce"){
+            d.find(".koala-container").show("fast", function(){
+                if($.browser.msie != true) {
+                    $(this).effect(((settings==null)?"bounce":settings.transition), {
+                        times:3
+                    }, 300);
+                }
+            });
+        }else if(settings!=null && settings.transition=="fadeIn") { d.find(".koala-container").fadeIn();
+        }else { d.find(".koala-container").show(); }
+        if(settings!=null && settings.millisecondsToClose!=null){
+            setTimeout(function(){
+                if(settings!=null && settings.showOverflow){$.KFWOverlay("hide");}
+                $(".koala-container",d).fadeOut(((settings==null)?300:settings.fadeOutTime));
+            },settings.millisecondsToClose);
+        }
+
     if(type=="ok" && settings!=null && settings.showOverflow) {$.KFWOverlay("show");}
     return d.appendTo($("body"));
 },
@@ -132,7 +149,7 @@ $.KoalaFormHide();
     if(!isValid) {
         if(defaults.use_css) {
             if(defaults.showMessages) {
-                $.KoalaFormMsgBox(defaults.errorMessage.title,"<ul>"+msg+"</ul>",type,defaults,defaults.errorMessage.iconClass);
+                $.KoalaFormMsgBox(defaults.errorMessage.title,"<ul>"+msg+"</ul>","error",defaults,defaults.errorMessage.iconClass);
             }
             else {
                 alert(msg);
@@ -458,6 +475,9 @@ $.fn.extend({
             addValidation: null,
             showMessages: true,
             showOverflow:true,
+            btnClose: {
+                text: "Click para cerrar"
+            },
             errorMessage: {
                 title: "<strong>Mensaje de error</strong>:",
                 iconClass: "ui-icon ui-icon-alert"
@@ -477,6 +497,8 @@ $.fn.extend({
             horaOptions:null,
             addOptions:null,
             disableButtonOnSubmit: true,
+            millisecondsToClose: 5000,/* null o milliseconds */
+            transition: "fadeIn", /* bounce,fadeIn,"" */
             validations: [
                 {name:"novacio",fn:"$.isNotVacio",msg:"no puede estar vac&iacute;o",afterFn:null},
                 {name:"rut",fn:"$.isRut", msg:"debe ser v&aacute;lido"},
@@ -537,7 +559,9 @@ $.fn.extend({
                     }
                 } else {
                     if($($element).is("select")) {
-                        $($element)[0].selectedIndex = -1;
+                        if($(">option:selected",$($element)).size()==0){
+                            $($element)[0].selectedIndex = -1;
+                        }
                     }
                     var isKoalaElement = $.attachValidation($($element));
                     if(isKoalaElement){ /* ON */
@@ -559,7 +583,7 @@ $.fn.extend({
                 if(settings.disableButtonOnSubmit){
                     $(this).find(":submit").attr('disabled', 'disabled');
                 }
-				
+
                 var valid = $.msgMotor($.map(init,function(element,i) {
                     var elementData = $(element).data("KoalaElement");
                     if(!$.isUndefined(elementData))
